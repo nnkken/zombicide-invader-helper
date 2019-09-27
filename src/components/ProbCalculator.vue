@@ -1,0 +1,107 @@
+<template>
+  <div>
+    <div class="select-dice">
+      Dices:
+      <div v-for="i in 10" v-bind:key="i" class="select-dice-button-container">
+        <button @click="dice = i">{{ i }}</button>
+      </div>
+    </div>
+    <div class="select-criteria">
+      Criteria:
+      <div v-for="i in 6" v-bind:key="i" class="select-criteria-button-container">
+        <button @click="criteria = i">{{ i }}+</button>
+      </div>
+    </div>
+    <div>
+      <h4>Hit prob table for {{ dice }} dice {{ criteria }}+:</h4>
+      <div v-for="(output, hit) in table" v-bind:key="`${output}${hit}`">
+        &#x2265; {{ hit }} hit: {{ output.revAcc | percent }} (exactly {{ hit }} hit: {{ output.prob | percent }})
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+function nCr(n, r) {
+    let ans = 1;
+    for (let i = 0; i < r; i += 1) {
+      ans *= n - i;
+      ans /= i + 1;
+    }
+    return ans;
+}
+
+function calProb(dice, criteria, hit) {
+    let pMiss = (criteria - 1) / 6;
+    let pHit = 1 - pMiss;
+    return nCr(dice, hit) * Math.pow(pHit, hit) * Math.pow(pMiss, dice - hit);
+}
+
+export default {
+  name: 'ProbCalculator',
+  data() {
+    return {
+      dice: 5,
+      criteria: 5,
+    };
+  },
+  filters: {
+    percent(p) {
+      return `${(p * 100).toFixed(2)}%`;
+    },
+  },
+  computed: {
+    table() {
+      const output = {};
+      let revAcc = 1;
+      for (let hit = 0; hit <= this.dice; hit += 1) {
+        const prob = calProb(this.dice, this.criteria, hit);
+        output[hit] = { prob, revAcc };
+        revAcc -= prob;
+      }
+      return output;
+    },
+  },
+}
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+h3 {
+  margin: 40px 0 0;
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+li {
+  display: inline-block;
+  margin: 0 10px;
+}
+a {
+  color: #42b983;
+}
+.select-dice {
+  width: 100%;
+  max-width: 25rem;
+  display: flex;
+}
+.select-dice .select-dice-button-container {
+  width: 100%;
+}
+.select-dice button {
+  width: 100%;
+}
+
+.select-criteria {
+  width: 100%;
+  max-width: 25rem;
+  display: flex;
+}
+.select-criteria .select-criteria-button-container {
+  width: 100%;
+}
+.select-criteria button {
+  width: 100%;
+}
+</style>
