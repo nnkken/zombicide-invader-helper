@@ -2,24 +2,24 @@
   <div>
     <div>
       Dices:
-      <div class="select-dice">
-        <div v-for="i in 10" v-bind:key="i" class="select-dice-button-container">
+      <div class="select-container">
+        <div v-for="i in 10" v-bind:key="i" class="select-button-container dice">
           <button @click="dice = i">{{ i }}</button>
         </div>
-      </div>
-      <div class="select-dice">
-        <input v-model="dice" type="range" name="dice" min="1" max="10">
+        <div class="select-range-container dice">
+          <input v-model="dice" type="range" name="dice" min="1" max="10">
+        </div>
       </div>
     </div>
     <div>
       Criteria:
-      <div class="select-criteria">
-        <div v-for="i in 6" v-bind:key="i" class="select-criteria-button-container">
+      <div class="select-container">
+        <div v-for="i in 6" v-bind:key="i" class="select-button-container criteria">
           <button @click="criteria = i">{{ i }}+</button>
         </div>
-      </div>
-      <div class="select-criteria">
-        <input v-model="criteria" type="range" name="criteria" min="1" max="6">
+        <div class="select-range-container criteria">
+          <input v-model="criteria" type="range" name="criteria" min="1" max="6">
+        </div>
       </div>
     </div>
     <div>
@@ -104,22 +104,33 @@ input[type=range] {
   width: 100%;
 }
 
-.select-dice {
+.select-container {
   width: 100%;
   max-width: 25rem;
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
-.select-dice .select-dice-button-container {
+.select-container button {
   width: 100%;
 }
-.select-dice button {
+.select-button-container {
   width: 100%;
 }
-
-.select-criteria {
+.select-button-container.dice {
+  flex-basis: 10%;
+}
+.select-button-container.criteria {
+  flex-basis: 16.66%;
+}
+.select-range-container {
   width: 100%;
-  max-width: 25rem;
-  display: flex;
+}
+.select-range-container.dice {
+  flex-basis: 90%;
+}
+.select-range-container.criteria {
+  flex-basis: 83.33%;
 }
 .select-criteria .select-criteria-button-container {
   width: 100%;
