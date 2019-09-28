@@ -1,15 +1,25 @@
 <template>
   <div>
-    <div class="select-dice">
+    <div>
       Dices:
-      <div v-for="i in 10" v-bind:key="i" class="select-dice-button-container">
-        <button @click="dice = i">{{ i }}</button>
+      <div class="select-dice">
+        <div v-for="i in 10" v-bind:key="i" class="select-dice-button-container">
+          <button @click="dice = i">{{ i }}</button>
+        </div>
+      </div>
+      <div class="select-dice">
+        <input v-model="dice" type="range" name="dice" min="1" max="10">
       </div>
     </div>
-    <div class="select-criteria">
+    <div>
       Criteria:
-      <div v-for="i in 6" v-bind:key="i" class="select-criteria-button-container">
-        <button @click="criteria = i">{{ i }}+</button>
+      <div class="select-criteria">
+        <div v-for="i in 6" v-bind:key="i" class="select-criteria-button-container">
+          <button @click="criteria = i">{{ i }}+</button>
+        </div>
+      </div>
+      <div class="select-criteria">
+        <input v-model="criteria" type="range" name="criteria" min="1" max="6">
       </div>
     </div>
     <div>
@@ -90,6 +100,10 @@ li {
 a {
   color: #42b983;
 }
+input[type=range] {
+  width: 100%;
+}
+
 .select-dice {
   width: 100%;
   max-width: 25rem;
