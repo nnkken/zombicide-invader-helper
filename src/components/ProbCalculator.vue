@@ -14,9 +14,18 @@
     </div>
     <div>
       <h4>Hit prob table for {{ dice }} dice {{ criteria }}+:</h4>
-      <div v-for="(output, hit) in table" v-bind:key="`${output}${hit}`">
-        &#x2265; {{ hit }} hit: {{ output.revAcc | percent }} (exactly {{ hit }} hit: {{ output.prob | percent }})
-      </div>
+      <table>
+        <tr>
+          <th>Hits</th>
+          <th>Pass</th>
+          <th>Exact</th>
+        </tr>
+        <tr v-for="(output, hit) in table" v-bind:key="`${output}${hit}`">
+          <td>&#x2265; {{ hit }}</td>
+          <td>{{ output.revAcc | percent }}</td>
+          <td>{{ output.prob | percent }}</td>
+        </tr>
+      </table>
     </div>
   </div>
 </template>
