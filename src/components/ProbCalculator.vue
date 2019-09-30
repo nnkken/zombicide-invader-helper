@@ -24,7 +24,7 @@
     </div>
     <div>
       <h4>Hit prob table for {{ dice }} dice {{ criteria }}+:</h4>
-      <table>
+      <table class="table-hit-prob">
         <tr>
           <th>Hits</th>
           <th>Pass</th>
@@ -32,8 +32,8 @@
         </tr>
         <tr v-for="(output, hit) in table" v-bind:key="`${output}${hit}`">
           <td>&#x2265; {{ hit }}</td>
-          <td>{{ output.revAcc | percent }}</td>
-          <td>{{ output.prob | percent }}</td>
+          <td :style="getColorByProb(output.revAcc)">{{ output.revAcc | percent }}</td>
+          <td :style="getColorByProb(output.prob)">{{ output.prob | percent }}</td>
         </tr>
       </table>
     </div>
@@ -68,6 +68,33 @@ export default {
     percent(p) {
       return `${(p * 100).toFixed(2)}%`;
     },
+  },
+  methods: {
+    getColorByProb(p) {
+      const val = p * 100;
+      const state = Math.floor(val / 50);
+      let r = 255;
+      let g = 255;
+      switch (state) {
+        case 0: { // from red to yellow
+          g = Math.round(p * 2 * 255);
+          break;
+        }
+        case 1: { // from yellow to green
+          r = 255 -  Math.round((p - 0.5) * 2 * 255);
+          break;
+        }
+        case 2: { // p == 1
+          r = 0;
+          break;
+        }
+        default: break;
+      }
+      return {
+        color: `rgb(${r}, ${g}, 0)`,
+        'background-color': '#696969',
+      };
+    }
   },
   computed: {
     table() {
@@ -138,4 +165,14 @@ input[type=range] {
 .select-criteria button {
   width: 100%;
 }
+
+.table-hit-prob {
+  border-collapse: collapse;
+}
+
+.table-hit-prob td, .table-hit-prob th{
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
 </style>
