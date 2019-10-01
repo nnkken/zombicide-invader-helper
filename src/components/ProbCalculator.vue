@@ -14,11 +14,11 @@
     <div>
       Criteria:
       <div class="select-container">
-        <div v-for="i in 6" v-bind:key="i" class="select-button-container criteria">
-          <button @click="criteria = i">{{ i }}+</button>
+        <div v-for="c in criteriaList" v-bind:key="c" class="select-button-container criteria">
+          <button @click="criteria = c">{{ c }}+</button>
         </div>
         <div class="select-range-container criteria">
-          <input v-model="criteria" type="range" name="criteria" min="1" max="6">
+          <input v-model="criteria" type="range" name="criteria" min="2" max="6">
         </div>
       </div>
     </div>
@@ -107,6 +107,9 @@ export default {
       }
       return output;
     },
+    criteriaList() {
+      return [2, 3, 4, 5, 6];
+    },
   },
 }
 </script>
@@ -148,7 +151,7 @@ input[type=range] {
   flex-basis: 10%;
 }
 .select-button-container.criteria {
-  flex-basis: 16.66%;
+  flex-basis: 20%;
 }
 .select-range-container {
   width: 100%;
@@ -157,7 +160,7 @@ input[type=range] {
   flex-basis: 90%;
 }
 .select-range-container.criteria {
-  flex-basis: 83.33%;
+  flex-basis: 80%;
 }
 .select-criteria .select-criteria-button-container {
   width: 100%;
