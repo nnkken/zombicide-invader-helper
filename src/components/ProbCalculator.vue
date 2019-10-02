@@ -27,11 +27,11 @@
       <table class="table-hit-prob">
         <tr>
           <th>Hits</th>
-          <th>Pass</th>
-          <th>Exact</th>
+          <th>&#x2265;</th>
+          <th>&equals;</th>
         </tr>
         <tr v-for="(output, hit) in table" v-bind:key="`${output}${hit}`">
-          <td>&#x2265; {{ hit }}</td>
+          <td>{{ hit }}</td>
           <td :style="getColorByProb(output.revAcc)">{{ output.revAcc | percent }}</td>
           <td :style="getColorByProb(output.prob)">{{ output.prob | percent }}</td>
         </tr>
