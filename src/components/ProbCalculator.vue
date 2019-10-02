@@ -31,9 +31,9 @@
           <th>&equals;</th>
         </tr>
         <tr v-for="(output, hit) in table" v-bind:key="`${output}${hit}`">
-          <td>{{ hit }}</td>
-          <td :style="getColorByProb(output.revAcc)">{{ output.revAcc | percent }}</td>
-          <td :style="getColorByProb(output.prob)">{{ output.prob | percent }}</td>
+          <td align="center">{{ hit }}</td>
+          <td align="right" :style="getColorByProb(output.revAcc)">{{ output.revAcc | percent }}</td>
+          <td align="right" :style="getColorByProb(output.prob)">{{ output.prob | percent }}</td>
         </tr>
       </table>
     </div>
@@ -92,7 +92,7 @@ export default {
       }
       return {
         color: `rgb(${r}, ${g}, 0)`,
-        'background-color': '#696969',
+        'background-color': '#000000',
       };
     }
   },
